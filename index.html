@@ -8,382 +8,230 @@
   <style>
   :root {
     /* --------系統共用常數（可全站調整）-------- */
-    --card-w: 980px;            /* 表單面板最大寬度（可調） */
-    --radius: 16px;             /* 面板圓角（可調） */
-    --border: #2a2a2a;          /* 邊框色（可調） */
-    --ink: #eaeaea;             /* 主要文字色（可調） */
-    --muted: #a8a8a8;           /* 次要文字色（可調） */
-    --danger: #ff0000;          /* 錯誤色（可調） */
-    --ok: #22c55e;              /* 成功/通過色（可調） */
-    --accent: #60a5fa;          /* 重點色/聚焦邊框（可調） */
-    --btn-bg: #bc2d2d;          /* 按鈕底色（可調） */
-    --btn-border: #2a2a2a;      /* 按鈕邊框（可調） */
+    --card-w: 980px;
+    --radius: 16px;
+    --border: #2a2a2a;
+    --ink: #eaeaea;
+    --muted: #a8a8a8;
+    --danger: #fde68a;         /* 改：錯誤字體淡黃色 */
+    --ok: #22c55e;
+    --accent: #60a5fa;
+    --btn-bg: #bc2d2d;
+    --btn-border: #2a2a2a;
 
-    --title-size: 20px;         /* 頁面標題字級（可調；每頁可覆蓋） */
-    --content-size: 12px;       /* 內容/表單字級（可調；每頁可覆蓋） */
-    --footer-size: 11px;        /* 頁尾字級（可調） */
+    --title-size: 20px;
+    --content-size: 12px;
+    --footer-size: 11px;
 
-    --section-gap: 16px;        /* 區塊與段落間距（可調） */
-    --control-pad: 10px 12px;   /* 控制項內距（可調） */
-    --control-radius: 12px;     /* 控制項圓角（可調） */
-    --control-bg: #0f0f0f;      /* 控制項背景（可調） */
-    --control-border: #262626;  /* 控制項邊框（可調） */
-    --control-focus: #60a5fa;   /* 控制項聚焦外框色（可調） */
-    --input-height: 44px;       /* 控制項高度（讓框框一樣高；可調） */
+    /* 全域字級控制變數 */
+    --label-size: 14px;
+    --hint-size: 12px;
+    --input-size: 12px;
+    --placeholder-size: 12px;
+    --error-size: 12px;
 
-    --actionbar-h: 64px;        /* 底部固定操作列高度（可調；將由 JS 自動覆蓋實際高度） */
-    --footer-h: 44px;           /* 頁尾高度（可調） */
-    --kv-offset: 0px;           /* 鍵盤彈出時向上位移量（JS 寫入） */
+    --section-gap: 16px;
+    --control-pad: 10px 12px;
+    --control-radius: 12px;
+    --control-bg: #0f0f0f;
+    --control-border: #262626;
+    --control-focus: #60a5fa;
 
-    /* 新增：上一頁/下一頁縮小用（可調） */
-    --nav-btn-min-h: 32px;      /* 只影響「上一頁 / 下一頁」兩顆按鈕的最小高度（可調） */
-    --nav-btn-pad: 4px 10px;    /* 只影響「上一頁 / 下一頁」兩顆按鈕的內距（可調） */
+    --input-height: 38px;
 
-    /* 新增：操作列內距（可調，縮小整列高度） */
-    --actionbar-pad-y: 6px;     /* 操作列上下內距（可調） */
-    --actionbar-pad-x: 12px;    /* 操作列左右內距（可調） */
+    --actionbar-h: 64px;
+    --footer-h: 44px;
+    --kv-offset: 0px;
 
-    /* 新增：面板背景變數（由 data-group 控制） */
-    --panel-bg: linear-gradient(0deg,rgba(64,55,55,1) 0%, rgba(43,37,37,1) 37%, rgba(0,0,0,1) 100%); /* 預設灰黑 */
+    /* 上一頁/下一頁縮小 */
+    --nav-btn-min-h: 32px;
+    --nav-btn-pad: 4px 10px;
 
-    /*//* --------第10頁：範例圖片尺寸/外觀（可自行調整；新增）--------*/*/
-    --sample-gap: 10px;         /* 左右兩張圖片之間的間距（可調） */
-    --sample-max-h: 180px;      /* 圖片最大高度（可調：放不下自動縮小） */
-    --sample-pad: 8px;          /* 每張圖外框內距（可調） */
-    --sample-bg: rgba(255,255,255,0.04); /* 圖片外框底色（可調） */
-    --sample-radius: 12px;      /* 圖片外框圓角（可調） */
+    /* 操作列內距 */
+    --actionbar-pad-y: 6px;
+    --actionbar-pad-x: 12px;
+
+    /* 面板背景變數（由 data-group 控制） */
+    --panel-bg: linear-gradient(0deg,rgba(64,55,55,1) 0%, rgba(43,37,37,1) 37%, rgba(0,0,0,1) 100%);
+
+    /* 第10頁範例圖片外觀 */
+    --sample-gap: 10px;
+    --sample-max-h: 180px;
+    --sample-pad: 8px;
+    --sample-bg: rgba(255,255,255,0.04);
+    --sample-radius: 12px;
   }
 
   /* ===== 全站背景底色 ===== */
   html, body { height: 100%; margin: 0; overflow-x: hidden; }
   body {
     font-family:
-      "M PLUS Rounded 1c",
-      "Nunito",
-      "Noto Sans TC",
-      "PingFang TC",
-      "Microsoft JhengHei",
-      "Helvetica Neue", Arial, sans-serif;
+      "M PLUS Rounded 1c","Nunito","Noto Sans TC","PingFang TC","Microsoft JhengHei","Helvetica Neue", Arial, sans-serif;
     color: var(--ink);
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    touch-action: pan-y;              /* 僅允許垂直滑動 */
-    overscroll-behavior-y: contain;   /* 抑制彈性回彈干擾 */
-    background: #000;                 /* 背景底色（面板漸層會覆蓋） */
+    touch-action: pan-y;
+    overscroll-behavior-y: contain;
+    background: #000;
   }
 
-  /* 面板（上下貼齊、內容內捲、固定底部操作列 + 頁尾） */
+  /* 面板 */
   .container {
     width: min(var(--card-w), 100vw);
-    height: 100svh; /* 使用 svh，受視口可視高度影響，鍵盤彈出更穩定 */
+    height: 100svh;
     margin: 0 auto;
     border: 1px solid var(--border);
     border-radius: var(--radius);
     box-shadow: 0 12px 28px rgba(0,0,0,0.35);
     display: grid;
-    grid-template-rows: auto 1fr auto auto; /* header / content / actionbar / footer */
+    grid-template-rows: auto 1fr auto auto;
     overflow: hidden;
     background: linear-gradient(0deg,rgba(64,55,55,1) 0%, rgba(43,37,37,1) 37%, rgba(0,0,0,1) 100%);
   }
   /* 面板背景分組（依頁碼切換） */
   .container[data-group="g1"]{
-    /*//* --------配色（第1~6頁：灰黑；可自行調整）--------*/*/
     background: linear-gradient(0deg,rgba(64,55,55,1) 0%, rgba(43,37,37,1) 43%, rgba(0,0,0,1) 100%);
   }
   .container[data-group="g2"]{
-    /*//* --------配色（第7~9頁：紅系；可自行調整）--------*/*/
-    background: linear-gradient(0deg,rgba(163,39,39,1) 0%, rgba(138,24,24,1) 43%, rgba(115,10,10,1) 100%);
+    background: linear-gradient(0deg,rgba(117, 16, 16, 1) 0%, rgba(98, 13, 13, 1) 22%, rgba(89, 11, 11, 1) 100%);
   }
   .container[data-group="g3"]{
-    /*//* --------配色（第10~12頁：紫系；可自行調整）--------*/*/
     background: linear-gradient(0deg,rgba(105,30,61,1) 0%, rgba(75,14,61,1) 83%, rgba(56,4,61,1) 100%);
   }
 
-  /* ===== 新增：以 CSS 變數強制依 data-group 套色（確保覆蓋） ===== */
-  .container { background: var(--panel-bg) !important; } /* 確保以變數為最終背景 */
+  /* 以 CSS 變數強制依 data-group 套色（確保覆蓋） */
+  .container { background: var(--panel-bg) !important; }
   .container[data-group="g1"]{ --panel-bg: linear-gradient(0deg,rgba(64,55,55,1) 0%, rgba(43,37,37,1) 43%, rgba(0,0,0,1) 100%); }
-  .container[data-group="g2"]{ --panel-bg: linear-gradient(0deg,rgba(163,39,39,1) 0%, rgba(138,24,24,1) 43%, rgba(115,10,10,1) 100%); }
+  .container[data-group="g2"]{ --panel-bg: linear-gradient(0deg,rgba(117, 16, 16, 1) 0%, rgba(98, 13, 13, 1) 22%, rgba(89, 11, 11, 1) 100%); }
   .container[data-group="g3"]{ --panel-bg: linear-gradient(0deg,rgba(105,30,61,1) 0%, rgba(75,14,61,1) 83%, rgba(56,4,61,1) 100%); }
 
-  /* 頁首（中間置中標題；右上角顯示步驟） */
-  .header {
-    position: relative;
-    padding: 12px 16px;
-    border-bottom: 1px solid var(--border);
-    backdrop-filter: blur(2px);
-  }
-  .header-title {
-    font-weight: 800;
-    font-size: var(--title-size);
-    text-align: center;
-    letter-spacing: 0.5px;
-  }
-  .header-step {
-    position: absolute;
-    right: 12px; top: 12px;
-    color: var(--muted);
-    font-size: var(--content-size);
-    font-weight: 700;
-  }
+  /* 頁首 */
+  .header { position: relative; padding: 12px 16px; border-bottom: 1px solid var(--border); backdrop-filter: blur(2px); }
+  .header-title { font-weight: 800; font-size: var(--title-size); text-align: center; letter-spacing: 0.5px; }
+  .header-step { position: absolute; right: 12px; top: 12px; color: var(--muted); font-size: var(--content-size); font-weight: 700; }
 
-  /* 內容：只在此區滾動；底部預留操作列與頁尾高度 */
-  .content {
-    padding: 16px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: calc(var(--actionbar-h) + var(--footer-h) + 16px);
-  }
+  /* 內容 */
+  .content { padding: 16px; overflow-y: auto; -webkit-overflow-scrolling: touch; padding-bottom: calc(var(--actionbar-h) + var(--footer-h) + 16px); }
 
   /* 步驟頁 */
   .step { display: none; font-size: var(--content-size); }
   .step.active { display: block; }
-  .step h2 {
-    margin: 0 0 10px 0;
-    font-size: var(--title-size);
-    text-align: center;
-    font-weight: 800;
-  }
+  .step h2 { margin: 0 0 10px 0; font-size: var(--title-size); text-align: center; font-weight: 800; }
 
-  .note-list {
-    margin: 8px 0 16px 1.2em;
-    color: var(--muted);
-    line-height: 1.7;
-  }
+  .note-list { margin: 8px 0 16px 1.2em; color: var(--muted); line-height: 1.7; }
 
-  .fieldset {
-    border: 1px dashed var(--border);
-    border-radius: var(--control-radius);
-    padding: 14px;
-    margin-top: var(--section-gap);
-  }
+  .fieldset { border: 1px dashed var(--border); border-radius: var(--control-radius); padding: 14px; margin-top: var(--section-gap); }
 
-  /* 第1頁特別：整組置中 + 選項置中 */
-  .center-block {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    gap: 12px;
-  }
-  .radio-row {
-    display: flex;
-    justify-content: center;
-    gap: 18px;
-    flex-wrap: wrap;
-  }
+  /* 第1頁：置中 */
+  .center-block { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 12px; }
+  .radio-row { display: flex; justify-content: center; gap: 18px; flex-wrap: wrap; }
   .exit {
     background: rgba(239,68,68,.08);
     border: 1px solid rgba(239,68,68,.35);
     color: #fecaca;
-    padding: 12px;
-    border-radius: 12px;
-    margin-top: 8px;
-    display: none;
+    padding: 12px; border-radius: 12px; margin-top: 8px; display: none;
   }
   .exit.show { display: block; }
 
-  /* 表單控制項（統一寬高） */
-  label { font-weight: 700; display: block; margin-bottom: 6px; }
-  label small { color: var(--muted); font-weight: 600; margin-left: 4px; }
+  /* 表單控制項 */
+  label { font-weight: 700; display: block; margin-bottom: 6px; font-size: var(--label-size, var(--content-size)); }
+  label small { color: var(--muted); font-weight: 600; margin-left: 4px; font-size: var(--hint-size, var(--content-size)); }
   .row { margin-bottom: var(--section-gap); }
 
-  input[type="text"],
-  input[type="email"],
-  select {
+  input[type="text"], input[type="email"], select {
     width: 100%;
     padding: var(--control-pad);
     background: var(--control-bg);
     border: 1px solid var(--control-border);
     border-radius: var(--control-radius);
-    outline: none;
-    color: var(--ink);
-    font-size: var(--content-size);
+    outline: none; color: var(--ink);
+    font-size: var(--input-size, var(--content-size));
     height: var(--input-height);
     box-sizing: border-box;
   }
-  input:focus, select:focus {
-    border-color: var(--control-focus);
-    box-shadow: 0 0 0 3px rgba(96,165,250,.25);
-  }
-  .error { color: var(--danger); margin-top: 6px; font-size: var(--content-size); display:none; } /* 初始隱藏 */
+  input::placeholder { font-size: var(--placeholder-size, var(--input-size, var(--content-size))); }
+  input:focus, select:focus { border-color: var(--control-focus); box-shadow: 0 0 0 3px rgba(96,165,250,.25); }
 
-  /* iOS Safari 輸入時自動放大防呆：把可輸入控制項字級提升到 16px（僅覆蓋 input/select，不影響標籤） */
+  .error { color: var(--danger); margin-top: 6px; font-size: var(--error-size, var(--content-size)); display:none; }
+
+  .radio-row label { font-size: var(--content-size); font-weight: 700; }
+
+  /* iOS Safari 防自動放大 */
   @supports (-webkit-touch-callout: none) {
-    input[type="text"], input[type="email"], select { font-size: 16px; } /* 可自行調整：避免焦點觸發自動縮放 */
+    input[type="text"], input[type="email"], input[type="password"], select, textarea { font-size: 16px; }
   }
 
-  /* 檔案上傳（同高） */
-  .file-row {
-    display: grid;
-    grid-template-columns: 1fr auto 1fr;
-    gap: 10px;
-    align-items: center;
-    margin-bottom: var(--section-gap);
-  }
+  /* 檔案上傳行 */
+  .file-row { display: grid; grid-template-columns: 1fr auto 1fr; gap: 10px; align-items: center; margin-bottom: var(--section-gap); }
   .file-name {
-    color: var(--muted);
-    font-size: var(--content-size);
-    min-height: var(--input-height);
-    display: flex; align-items: center;
-    padding: 0 6px;
-    border: 1px dashed var(--control-border);
-    border-radius: var(--control-radius);
-    background: rgba(255,255,255,0.02);
-    box-sizing: border-box;
+    color: var(--muted); font-size: var(--content-size); min-height: var(--input-height);
+    display: flex; align-items: center; padding: 0 6px; border: 1px dashed var(--control-border);
+    border-radius: var(--control-radius); background: rgba(255,255,255,0.02); box-sizing: border-box;
   }
   .file-input { position: relative; overflow: hidden; display: inline-block; }
   .file-input input[type="file"] { position: absolute; inset: 0; opacity: 0; cursor: pointer; }
   .file-btn {
-    appearance: none;
-    border: 1px solid var(--btn-border);
-    background: var(--btn-bg);
-    color: var(--ink);
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    font-size: var(--content-size);
-    min-height: var(--input-height);
-    display: inline-flex; align-items: center;
+    appearance: none; border: 1px solid var(--btn-border); background: var(--btn-bg); color: var(--ink);
+    padding: 10px 14px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: var(--content-size);
+    min-height: var(--input-height); display: inline-flex; align-items: center;
   }
 
-  /* 新增：只縮小「上一頁 / 下一頁」兩顆按鈕 */
-  .btn--nav {
-    min-height: var(--nav-btn-min-h); /* 可調：上一頁/下一頁按鈕高度 */
-    padding: var(--nav-btn-pad);      /* 可調：上一頁/下一頁按鈕內距 */
-  }
+  /* 只縮小「上一頁 / 下一頁」 */
+  .btn--nav { min-height: var(--nav-btn-min-h); padding: var(--nav-btn-pad); }
 
-  /* 底部固定操作列（全頁共用） */
+  /* 底部固定操作列 */
   .actionbar {
-    position: relative;
-    display: flex;
-    gap: 10px;
-    justify-content: space-between;
-    align-items: center;
-    /* 新增：以變數縮小內距，並改為 auto 高度（之後由 JS 量測回填 --actionbar-h） */
+    position: relative; display: flex; gap: 10px; justify-content: space-between; align-items: center;
     padding: var(--actionbar-pad-y) var(--actionbar-pad-x) calc(var(--actionbar-pad-y) + env(safe-area-inset-bottom));
-    border-top: 1px solid var(--border);
-    background: rgba(0,0,0,0.35);
-    backdrop-filter: blur(4px);
-    height: auto; /* 新增：自適應高度，JS 會同步 padding-bottom */
-    transform: translateY(calc(-1 * var(--kv-offset))); /* 鍵盤抬升位移 */
+    border-top: 1px solid var(--border); background: rgba(0,0,0,0.35); backdrop-filter: blur(4px);
+    height: auto; transform: translateY(calc(-1 * var(--kv-offset)));
   }
   .btn {
-    appearance: none;
-    border: 1px solid var(--btn-border);
-    background: var(--btn-bg);
-    color: var(--ink);
-    padding: 10px 14px;
-    border-radius: 12px;
-    font-weight: 800;
-    cursor: pointer;
-    font-size: var(--content-size);
+    appearance: none; border: 1px solid var(--btn-border); background: var(--btn-bg); color: var(--ink);
+    padding: 10px 14px; border-radius: 12px; font-weight: 800; cursor: pointer; font-size: var(--content-size);
     min-height: var(--input-height);
   }
   .btn:disabled { opacity: .55; cursor: not-allowed; }
 
-  /* Sticky Footer（每頁都會看到） */
+  /* Sticky Footer */
   .footer {
     border-top: 1px solid var(--border);
     padding: 10px 14px calc(10px + env(safe-area-inset-bottom));
-    text-align: center;
-    color: var(--muted);
-    font-size: var(--footer-size);
-    background: rgba(0,0,0,0.15);
-    height: var(--footer-h);
-    transform: translateY(calc(-1 * var(--kv-offset))); /* 鍵盤抬升位移 */
+    text-align: center; color: var(--muted); font-size: var(--footer-size);
+    background: rgba(0,0,0,0.15); height: var(--footer-h);
+    transform: translateY(calc(-1 * var(--kv-offset)));
   }
 
-  /* ========== 每頁獨立設定區（可逐頁覆蓋） ========== */
-
-  /*//* --------配色／字級設定區（第1頁：首頁，可自行調整；新增）--------*/*/
+  /* ========== 每頁獨立設定區 ========== */
   .step[data-page="1"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第2頁：基本資料1，可自行調整；新增）--------*/*/
   .step[data-page="2"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第3頁：個資導言A，可自行調整；新增）--------*/*/
   .step[data-page="3"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第4頁：個資1，可自行調整；新增）--------*/*/
   .step[data-page="4"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第5頁：個資2，可自行調整；新增）--------*/*/
   .step[data-page="5"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第6頁：聯絡與學歷，可自行調整；新增）--------*/*/
   .step[data-page="6"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第7頁：其他資訊導言，可自行調整；新增）--------*/*/
   .step[data-page="7"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第8頁：緊急聯絡人，可自行調整；新增）--------*/*/
   .step[data-page="8"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第9頁：眷屬加保，可自行調整；新增）--------*/*/
   .step[data-page="9"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第10頁：上傳說明，可自行調整；新增）--------*/*/
   .step[data-page="10"]{ --title-size: 15px; --content-size: 12px; }
-
-  /*//* --------配色／字級設定區（第11頁：上傳實作，可自行調整；新增）--------*/*/
   .step[data-page="11"]{ --title-size: 15px; --content-size: 12px; }
+  .step[data-page="12"]{ --title-size: 15px; --content-size: 12px; } /* 新增：核檢頁 */
+  .step[data-page="13"]{ --title-size: 15px; --content-size: 12px; } /* 完成頁 */
 
-  /*//* --------配色／字級設定區（第12頁：完成頁，可自行調整；新增）--------*/*/
-  .step[data-page="12"]{ --title-size: 15px; --content-size: 12px; }
+  /* 第10頁：範例圖片樣式 */
+  .samples { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sample-gap); align-items: start; margin-top: 10px; }
+  .sample-box{ background: var(--sample-bg); border: 1px dashed var(--control-border); border-radius: var(--sample-radius); padding: var(--sample-pad); display: flex; flex-direction: column; align-items: center; }
+  .sample-img{ width: 100%; height: var(--sample-max-h); object-fit: contain; image-rendering: auto; }
+  .sample-cap{ margin-top: 6px; font-size: var(--content-size); color: var(--muted); text-align: center; }
 
-  /*//* --------第10頁：範例圖片樣式（左右排、可自動縮小；新增）--------*/*/
-  .samples { 
-    display: grid;
-    grid-template-columns: 1fr 1fr; /* 左右兩欄，固定不換行（需求：不要上下） */
-    gap: var(--sample-gap);
-    align-items: start;
-    margin-top: 10px; /* 與上方文字間距 */
-  }
-  .sample-box{
-    background: var(--sample-bg);
-    border: 1px dashed var(--control-border);
-    border-radius: var(--sample-radius);
-    padding: var(--sample-pad);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-  }
-  .sample-img{
-    width: 100%;
-    height: var(--sample-max-h);   /* 超出則以高度限制，自動縮小 */
-    object-fit: contain;           /* 盡量塞進盒子不裁切 */
-    image-rendering: auto;
-  }
-  .sample-cap{
-    margin-top: 6px;
-    font-size: var(--content-size);
-    color: var(--muted);
-    text-align: center;
-  }
-
-  /* ====== 登入遮罩樣式（沿用樣式當密碼鎖） ====== */
-  .gate {
-    position: fixed; inset: 0; z-index: 9999;
-    background: rgba(0,0,0,0.75);
-    display: flex; align-items: center; justify-content: center;
-  }
-  .gate-card {
-    width: min(520px, 92vw);
-    background: rgba(30,30,30,0.95);
-    border: 1px solid var(--border);
-    border-radius: 16px;
-    padding: 20px;
-    box-shadow: 0 10px 30px rgba(0,0,0,.45);
-  }
+  /* 登入遮罩（密碼鎖） */
+  .gate { position: fixed; inset: 0; z-index: 9999; background: rgba(0,0,0,0.75); display: flex; align-items: center; justify-content: center; }
+  .gate-card { width: min(520px, 92vw); background: rgba(30,30,30,0.95); border: 1px solid var(--border); border-radius: 16px; padding: 20px; box-shadow: 0 10px 30px rgba(0,0,0,.45); }
   .gate h3 { margin: 0 0 10px 0; font-size: 16px; text-align: center; }
   .gate p { margin: 6px 0; color: var(--muted); font-size: 13px; text-align: center; }
-  .gate .row { margin-top: 12px; text-align: center; } /* 新增：整排置中 */
-  .gate .row label { text-align: center; }            /* 新增：標籤置中 */
-  .gate .row input {
-    display: block; margin: 0 auto; text-align: center; max-width: 320px; /* 新增：輸入框置中與寬度 */
-  }
-  .gate .error { text-align: center; }
+  .gate .row { margin-top: 12px; text-align: center; }
+  .gate .row label { text-align: center; }
+  .gate .row input { display: block; margin: 0 auto; text-align: center; max-width: 320px; }
+  .gate .error { text-align: center; display:none; }
   .gate-actions { display: flex; gap: 10px; justify-content: center; margin-top: 12px; }
   </style>
 </head>
@@ -407,7 +255,7 @@
   <div class="container" role="region" aria-label="勞工名卡 分步表單" data-group="g1">
     <header class="header">
       <div class="header-title">勞工名卡建檔表</div>
-      <div class="header-step" id="headerStep">第01頁/共12頁</div>
+      <div class="header-step" id="headerStep">第01頁/共13頁</div>
     </header>
 
     <main class="content" id="content">
@@ -428,22 +276,22 @@
             <label><input type="radio" name="agree1" value="yes"> 是</label>
             <label><input type="radio" name="agree1" value="no"> 否</label>
           </div>
-          <div class="exit" id="exitMsg">表單已結束，感謝你/妳撥冗查看，就不要報到了，掰掰。</div>
+          <div class="exit" id="exitMsg">表單已結束，感謝你/妳撥冗查看，就不要報到了，掰掰</div>
         </div>
       </section>
 
-      <!-- 第2頁：基本資料① -->
+      <!-- 第2頁 -->
       <section class="step" data-page="2" id="step-2">
         <div class="row">
-          <label for="corp">© 公司名稱 <small>⏍ 請詢問清楚後點選店名</small></label>
+          <label for="corp">© 公司名稱 <small>⏍ 填寫公司名稱或店名</small></label>
           <input id="corp" type="text" placeholder="請輸入公司名稱/店名..." />
-          <div class="error" id="errCorp">⚠️此欄位不得為空</div>
+          <div class="error" id="errCorp">⚠️ 此欄位不得為空</div>
         </div>
 
         <div class="row">
           <label for="team">© 隸屬團隊 <small>⏍ 若不確定，請詢問面試主管後再行點選</small></label>
           <select id="team">
-            <option value="" selected disabled>請選擇團隊</option>
+            <option value="" selected disabled>請選擇</option>
             <option>外場-Serve Teams</option>
             <option>吧檯-Bar Teams</option>
             <option>內廚-Kitchen Teams</option>
@@ -451,55 +299,55 @@
             <option>公關-Public Relations Teams</option>
             <option>其他-Other</option>
           </select>
-          <div class="error" id="errTeam">⚠️尚未選擇隸屬團隊</div>
+          <div class="error" id="errTeam">⚠️ 尚未選擇隸屬團隊</div>
         </div>
 
         <div class="row">
           <label for="workType">© 工作型態 <small>⏍ 若不確定，請詢問面試主管後再行點選</small></label>
           <select id="workType">
-            <option value="" selected disabled>請選擇型態</option>
+            <option value="" selected disabled>請選擇</option>
             <option>正職/全時工時-Full Time</option>
             <option>兼職/部分工時-Part Time</option>
           </select>
-          <div class="error" id="errWorkType">⚠️尚未選擇工作型態</div>
+          <div class="error" id="errWorkType">⚠️ 尚未選擇工作型態</div>
         </div>
 
         <div class="row">
           <label for="startDate">© 到職日期 <small>⏍ 請以YYYY-MM-DD格式填寫</small></label>
           <input id="startDate" type="text" placeholder="範例：2025-11-12" />
-          <div class="error" id="errStartDate">⚠️日期格式錯誤或不存在</div>
+          <div class="error" id="errStartDate">⚠️ 日期格式錯誤或不存在</div>
         </div>
 
         <div class="row">
           <label for="wage">© 約定工資 <small>⏍ 千分位須逗號，且逗號必為半形且位置須正確</small></label>
           <input id="wage" type="text" placeholder="範例：40,000或200" />
-          <div class="error" id="errWage">⚠️請輸入正確格式</div>
+          <div class="error" id="errWage">⚠️ 請輸入正確格式</div>
         </div>
       </section>
 
-      <!-- 第3頁：📌 個人資訊 -->
+      <!-- 第3頁 -->
       <section class="step" data-page="3" id="step-3">
         <h2>📌 個人資訊</h2>
         <ol class="note-list">
           <li>請依照下列問題指示執行填寫。</li>
           <li>填寫表單若遇到困難請向承辦人提出禮貌詢問。</li>
         </ol>
-        <div class="fieldset">
+        <div class="fieldset center-block">
           <div style="font-weight:800; margin-bottom:8px;">是否同意上述事項</div>
           <div class="radio-row" role="radiogroup">
             <label><input type="radio" name="agreeInfo" value="yes"> 是</label>
             <label><input type="radio" name="agreeInfo" value="no"> 否</label>
           </div>
-          <div class="error" id="errAgreeInfo">⚠️需同意才能繼續填寫</div>
+          <div class="error" id="errAgreeInfo">⚠️ 需同意才能繼續填寫</div>
         </div>
       </section>
 
-      <!-- 第4頁：個資① -->
+      <!-- 第4頁 -->
       <section class="step" data-page="4" id="step-4">
         <div class="row">
           <label for="fullName">© 本名</label>
           <input id="fullName" type="text" placeholder="請輸入本名..." />
-          <div class="error" id="errFullName">⚠️此欄位不得為空</div>
+          <div class="error" id="errFullName">⚠️ 此欄位不得為空</div>
         </div>
 
         <div class="row">
@@ -510,87 +358,87 @@
             <option>女</option>
             <option>多元</option>
           </select>
-          <div class="error" id="errGender">⚠️尚未請選擇性別</div>
+          <div class="error" id="errGender">⚠️ 尚未請選擇性別</div>
         </div>
 
         <div class="row">
           <label for="nid">© 身分證字號 <small>⏍ 共計10碼</small></label>
           <input id="nid" type="text" placeholder="範例：A123456789" />
-          <div class="error" id="errNid">⚠️填寫或格式錯</div>
+          <div class="error" id="errNid">⚠️ 填寫或格式錯誤</div>
         </div>
       </section>
 
-      <!-- 第5頁：個資② -->
+      <!-- 第5頁 -->
       <section class="step" data-page="5" id="step-5">
         <div class="row">
           <label for="birthRoc7">© 民國出生年月日 <small>⏍ 請以yyyMMdd格式填寫</small></label>
           <input id="birthRoc7" type="text" placeholder="範例：1121008或0750819" />
-          <div class="error" id="errBirthRoc7">⚠️格式須為7碼yyyMMdd</div>
+          <div class="error" id="errBirthRoc7">⚠️ 格式須為7碼yyyMMdd</div>
         </div>
 
         <div class="row">
           <label for="birthPlace">© 出生地 <small>⏍ 身分證背面的出生地</small></label>
           <input id="birthPlace" type="text" placeholder="請輸入出生地..." />
-          <div class="error" id="errBirthPlace">⚠️此欄位不得為空。</div>
+          <div class="error" id="errBirthPlace">⚠️ 此欄位不得為空。</div>
         </div>
 
         <div class="row">
           <label for="addrHouse">© 戶籍地址 <small>⏍ 身分證背面包含里及鄰都須填寫</small></label>
           <input id="addrHouse" type="text" placeholder="請輸入戶籍地址" />
-          <div class="error" id="errAddrHouse">⚠️此欄位不得為空。</div>
+          <div class="error" id="errAddrHouse">⚠️ 此欄位不得為空。</div>
         </div>
 
         <div class="row">
           <label for="addrLive">© 居住地址 <small>⏍ 勿填寫同戶籍地</small></label>
           <input id="addrLive" type="text" placeholder="請輸入居住地址..." />
-          <div class="error" id="errAddrLive">⚠️不得為空，且不得填同戶籍地</div>
+          <div class="error" id="errAddrLive">⚠️ 不得為空，且不得填同戶籍地</div>
         </div>
       </section>
 
-      <!-- 第6頁：聯絡與學歷 -->
+      <!-- 第6頁 -->
       <section class="step" data-page="6" id="step-6">
         <div class="row">
           <label for="gmail">© Gmail <small>⏍ 限定Gmail並全程小寫（輸入 @ 自動補 gmail.com）</small></label>
           <input id="gmail" type="email" placeholder="請輸入mail..." />
-          <div class="error" id="errGmail">⚠️請輸入有效Gmail並使用小寫</div>
+          <div class="error" id="errGmail">⚠️ 請輸入有效Gmail並使用小寫</div>
         </div>
 
         <div class="row">
           <label for="mobile">© 聯絡手機 <small>⏍ 格式需為09xx-xxx-xxx</small></label>
           <input id="mobile" type="text" placeholder="範例：0912-345-647" />
-          <div class="error" id="errMobile">⚠️格式錯誤</div>
+          <div class="error" id="errMobile">⚠️ 格式錯誤</div>
         </div>
 
         <div class="row">
           <label for="edu">© 最高學歷 <small>⏍ 如就讀中請再學校成稱後加上(在學)</small></label>
           <input id="edu" type="text" placeholder="請輸入最高學歷..." />
-          <div class="error" id="errEdu">⚠️此欄位不得為空</div>
+          <div class="error" id="errEdu">⚠️ 此欄位不得為空</div>
         </div>
       </section>
 
-      <!-- 第7頁：📌 其他資訊 -->
+      <!-- 第7頁 -->
       <section class="step" data-page="7" id="step-7">
         <h2>📌 其他資訊</h2>
         <ol class="note-list">
           <li>請依照下列問題指示執行填寫。</li>
           <li>填寫表單若遇到困難請向承辦人提出禮貌詢問。</li>
         </ol>
-        <div class="fieldset">
+        <div class="fieldset center-block">
           <div style="font-weight:800; margin-bottom:8px;">是否同意上述事項</div>
           <div class="radio-row" role="radiogroup">
             <label><input type="radio" name="agreeOther" value="yes"> 是</label>
             <label><input type="radio" name="agreeOther" value="no"> 否</label>
           </div>
-          <div class="error" id="errAgreeOther">⚠️需同意才能繼續填寫</div>
+          <div class="error" id="errAgreeOther">⚠️ 需同意才能繼續填寫</div>
         </div>
       </section>
 
-      <!-- 第8頁：緊急聯絡人 -->
+      <!-- 第8頁 -->
       <section class="step" data-page="8" id="step-8">
         <div class="row">
           <label for="emgName">© 緊急連絡人</label>
           <input id="emgName" type="text" placeholder="請輸入姓名..." />
-          <div class="error" id="errEmgName">⚠️此欄不得為空</div>
+          <div class="error" id="errEmgName">⚠️ 此欄不得為空</div>
         </div>
 
         <div class="row">
@@ -602,23 +450,23 @@
         <div class="row">
           <label for="homePhone">© 家用電話 <small>⏍ 若無填寫「無」</small></label>
           <input id="homePhone" type="text" placeholder="請輸入家用電話..." />
-          <div class="error" id="errHomePhone">⚠️此欄不得為空</div>
+          <div class="error" id="errHomePhone">⚠️ 此欄不得為空</div>
         </div>
 
         <div class="row">
           <label for="emgMobile">© 連絡手機 <small>⏍ 格式須為09xx-xxx-xxx</small></label>
           <input id="emgMobile" type="text" placeholder="範例：0912-345-647" />
-          <div class="error" id="errEmgMobile">⚠️格式錯誤</div>
+          <div class="error" id="errEmgMobile">⚠️ 格式錯誤</div>
         </div>
 
         <div class="row">
           <label for="emgAddr">© 聯絡地址 <small>⏍ ⏍ 勿填寫同戶籍地</small></label>
           <input id="emgAddr" type="text" placeholder="請輸入聯絡地址..." />
-          <div class="error" id="errEmgAddr">⚠️不得為空，且不得填同戶籍地</div>
+          <div class="error" id="errEmgAddr">⚠️ 不得為空，且不得填同戶籍地</div>
         </div>
       </section>
 
-      <!-- 第9頁：眷屬加保（條件欄位；生日同 7 碼規則） -->
+      <!-- 第9頁 -->
       <section class="step" data-page="9" id="step-9">
         <div class="row">
           <label for="depEnable">© 眷屬是否依附加保</label>
@@ -627,32 +475,32 @@
             <option>是</option>
             <option>否</option>
           </select>
-          <div class="error" id="errDepEnable">⚠️請選擇是否依附加保</div>
+          <div class="error" id="errDepEnable">⚠️ 請選擇是否依附加保</div>
         </div>
 
         <div id="depFields" style="display:none;">
           <div class="row">
             <label for="depRel">© 關係 <small>⏍ 範例：父子、姊妹</small></label>
             <input id="depRel" type="text" placeholder="請填寫關係..." />
-            <div class="error" id="errDepRel">⚠️此欄不得為空</div>
+            <div class="error" id="errDepRel">⚠️ 此欄不得為空</div>
           </div>
 
           <div class="row">
             <label for="depName">© 姓名</label>
             <input id="depName" type="text" placeholder="請輸入姓名..." />
-            <div class="error" id="errDepName">⚠️此欄不得為空</div>
+            <div class="error" id="errDepName">⚠️ 此欄不得為空</div>
           </div>
 
           <div class="row">
             <label for="depNid">© 身分證字號 <small>⏍ 共計10碼</small></label>
             <input id="depNid" type="text" placeholder="例如：A123456789" />
-            <div class="error" id="errDepNid">⚠️填寫或格式錯誤</div>
+            <div class="error" id="errDepNid">⚠️ 填寫或格式錯誤</div>
           </div>
 
           <div class="row">
             <label for="depBirth7">© 民國出生年月日 <small>⏍ ⏍ 請以yyyMMdd格式填寫</small></label>
             <input id="depBirth7" type="text" placeholder="範例：1121008或0750819" />
-            <div class="error" id="errDepBirth7">⚠️格式須為7碼yyyMMdd</div>
+            <div class="error" id="errDepBirth7">⚠️ 格式須為7碼yyyMMdd</div>
           </div>
         </div>
       </section>
@@ -666,19 +514,17 @@
           <li>檔案須符合本公司限定規格。</li>
         </ol>
 
-        <!-- //* --------第10頁：範例圖片區（可自行調整；新增）--------*// -->
+        <!-- 範例圖片區 -->
         <div class="samples" aria-label="身分證範本">
           <figure class="sample-box">
-            <!-- 副檔名請依實際檔案調整：.png / .jpg / .jpeg 皆可 -->
-            <img class="sample-img" src="assets/身分證範本-正面.png" alt="身分證範本-正面">
+            <img class="sample-img" src="assets/身分證範本-正面.jpg" alt="❗️範例-身分證上傳限定規格-正面">
             <figcaption class="sample-cap">身分證範本－正面</figcaption>
           </figure>
           <figure class="sample-box">
-            <img class="sample-img" src="assets/身分證範本-背面.png" alt="身分證範本-背面">
+            <img class="sample-img" src="assets/身分證範本-背面.png" alt="❗️範例-身分證上傳限定規格-背面">
             <figcaption class="sample-cap">身分證範本－背面</figcaption>
           </figure>
         </div>
-        <!-- //* --------第10頁：範例圖片區（結束；新增）--------*// -->
 
         <div class="fieldset" style="margin-top:16px;">
           <div style="font-weight:800; margin-bottom:8px;">是否同意上述事項</div>
@@ -686,11 +532,11 @@
             <label><input type="radio" name="agreeUpload" value="yes"> 是</label>
             <label><input type="radio" name="agreeUpload" value="no"> 否</label>
           </div>
-          <div class="error" id="errAgreeUpload">⚠️需同意才能繼續填寫</div>
+          <div class="error" id="errAgreeUpload">⚠️ 需同意才能繼續填寫</div>
         </div>
       </section>
 
-      <!-- 第11頁：上傳實作（身分證正面／反面） -->
+      <!-- 第11頁：上傳身分證正面/反面 -->
       <section class="step" data-page="11" id="step-11">
         <div class="file-row">
           <div>身分證正面</div>
@@ -700,7 +546,7 @@
           </label>
           <div class="file-name" id="nameFront">尚未選取檔案</div>
         </div>
-        <div class="error" id="errFront">⚠️請選擇正面檔案</div>
+        <div class="error" id="errFront">⚠️ 請選擇身分證正面檔案</div>
 
         <div class="file-row">
           <div>身分證反面</div>
@@ -710,7 +556,7 @@
           </label>
           <div class="file-name" id="nameBack">尚未選取檔案</div>
         </div>
-        <div class="error" id="errBack">⚠️請選擇反面檔案</div>
+        <div class="error" id="errBack">⚠️ 請選擇身分證反面檔案</div>
 
         <div class="fieldset">
           <div class="checks">
@@ -725,8 +571,25 @@
         </div>
       </section>
 
-      <!-- 第12頁：完成 -->
+      <!-- 第12頁：❗️資料送出前－核檢區（新增） -->
       <section class="step" data-page="12" id="step-12">
+        <h2>❗️資料送出前－核檢區</h2>
+        <div class="fieldset">
+          <div class="checks">
+            <label><input type="checkbox" id="pre1"> 1. 請仔細思考認真填寫此表單。</label>
+            <label><input type="checkbox" id="pre2"> 2. 以上輸入資料都進行雙重確認。</label>
+            <label><input type="checkbox" id="pre3"> 3. 本人聲明無偽造之不法情形。</label>
+            <label><input type="checkbox" id="pre4"> 4. 上傳檔案都符合本公司格式。</label>
+            <label><input type="checkbox" id="pre5"> 5. 本表單有提供檢核表，請確實檢查後再勾選。</label>
+            <label><input type="checkbox" id="pre5_1"> 5-1. 若勾選後還填寫錯誤，請自負責任。</label>
+            <label><input type="checkbox" id="pre6"> 6. 提交表單後，請完成截圖回報機制。</label>
+          </div>
+          <div class="error" id="errPreflight">⚠️ 需全部勾選才能進入下一頁</div>
+        </div>
+      </section>
+
+      <!-- 第13頁：完成 -->
+      <section class="step" data-page="13" id="step-13">
         <h2>全數完成</h2>
         <div style="text-align:center; line-height:1.8;">
           © 勞工名卡登記表
@@ -734,7 +597,6 @@
           <div>❗️請截圖此畫面給承辦人。</div>
           <hr style="border:0;border-top:1px solid var(--border);margin:10px 0;">
           <div>系統已收到資料，將進入處理排程，表單已填寫完畢。</div>
-          <!-- 新增：時間戳顯示（Created / Updated） -->
           <div style="margin-top:10px;color:var(--muted);font-size:11px;">
             建立時間：<span id="stampCreated">—</span>　最後更新：<span id="stampUpdated">—</span>
           </div>
@@ -742,14 +604,12 @@
       </section>
     </main>
 
-    <!-- 底部固定操作列（全頁共用） -->
+    <!-- 底部固定操作列 -->
     <div class="actionbar" id="actionbar">
       <div class="left-actions">
-        <!-- 調整：左側只放「上一頁」 -->
         <button class="btn btn--nav" id="btnPrev" type="button">上一頁</button>
       </div>
       <div class="right-actions" style="display:flex; gap:10px;">
-        <!-- 調整：右側放「下一頁」與「完成」 -->
         <button class="btn btn--nav" id="btnNext" type="button">下一頁</button>
         <button class="btn" id="btnFinish" type="button">完成</button>
       </div>
@@ -761,35 +621,29 @@
   </div>
 
 <script>
-/* <======== 檔案用途：系統共用常數、簽章工具、小工具、固定頁籤定位 ======== > */
-
-/* --------系統常數（可調）-------- */
-const TOTAL_STEPS = 12;  /* 總頁數（顯示用） */
-const ACCESS_PWD = "19860819"; /* 新增：進入密碼（可調） */
+/* 系統共用常數、工具 */
+const TOTAL_STEPS = 13;  /* 改：總頁數 13 */
+const ACCESS_PWD = "19860819";
 
 const $  = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
-/* 新增：表單時間戳（建立/更新） */
+/* 表單時間戳 */
 const FORM_META = { createdAt: null, updatedAt: null };
 function fmtTW(d){
   try{
     return new Intl.DateTimeFormat('zh-TW',{year:'numeric',month:'2-digit',day:'2-digit',hour:'2-digit',minute:'2-digit',second:'2-digit',hour12:false,timeZone:'Asia/Taipei'}).format(d);
   }catch(e){ return d.toLocaleString(); }
 }
-function setCreatedNow(){
-  if(!FORM_META.createdAt){ FORM_META.createdAt = new Date(); updateStampUI(); }
-}
-function setUpdatedNow(){
-  FORM_META.updatedAt = new Date(); updateStampUI();
-}
+function setCreatedNow(){ if(!FORM_META.createdAt){ FORM_META.createdAt = new Date(); updateStampUI(); } }
+function setUpdatedNow(){ FORM_META.updatedAt = new Date(); updateStampUI(); }
 function updateStampUI(){
   const c = $("#stampCreated"), u = $("#stampUpdated");
   if(c){ c.textContent = FORM_META.createdAt ? fmtTW(FORM_META.createdAt) : "—"; }
   if(u){ u.textContent = FORM_META.updatedAt ? fmtTW(FORM_META.updatedAt) : "—"; }
 }
 
-/* ====== 密碼進入遮罩（移除信箱登入，改為密碼驗證；置中已於 CSS 處理） ====== */
+/* 密碼進入 */
 (function passGateInit(){
   const gate = $("#passGate"), pwd = $("#gatePwd"), btn = $("#gatePwdStart"), err=$("#gatePwdErr");
   if(!gate) return;
@@ -799,35 +653,33 @@ function updateStampUI(){
     if(v !== ACCESS_PWD){ err.style.display="block"; return; }
     err.style.display="none";
     gate.style.display="none";
-    setCreatedNow(); /* 成功進入即紀錄建立時間 */
-    autoFitActionbarHeight(); /* 進入後立刻量測操作列高度 */
+    setCreatedNow();
+    autoFitActionbarHeight();
   });
 })();
 
-/* ====== 鍵盤彈出調整（VisualViewport） ====== */
+/* 鍵盤彈出調整 */
 (function keyboardLift(){
   const vv = window.visualViewport;
   if(!vv) return;
   function apply(){
     const bottomInset = (window.innerHeight - vv.height - vv.offsetTop);
     document.documentElement.style.setProperty('--kv-offset', bottomInset>0 ? `${bottomInset}px` : '0px');
-    autoFitActionbarHeight(); /* 鍵盤變動時一併重量測 actionbar 高度 */
+    autoFitActionbarHeight();
   }
   vv.addEventListener('resize', apply);
   vv.addEventListener('scroll', apply);
-  window.addEventListener('resize', apply); /* 新增：一般 resize 也校正（避免恢復不回來） */
+  window.addEventListener('resize', apply);
   apply();
 })();
 
-/* 新增：自動量測 actionbar 高度 → 寫回 --actionbar-h，讓內容可視區更大 */
+/* 自動量測 actionbar 高度 */
 function autoFitActionbarHeight(){
   const bar = $("#actionbar");
   if(!bar) return;
-  const h = bar.offsetHeight; /* 以實際內容高度為準（.actionbar 已改成 height:auto） */
+  const h = bar.offsetHeight;
   document.documentElement.style.setProperty('--actionbar-h', `${h}px`);
 }
-
-/* 監聽操作列尺寸變化（文字換行/按鈕狀態變化時同步） */
 (function observeBar(){
   const bar = $("#actionbar");
   if(!bar || !('ResizeObserver' in window)) return;
@@ -835,7 +687,7 @@ function autoFitActionbarHeight(){
   ro.observe(bar);
 })();
 
-/* ====== 焦點自動可視（避免被鍵盤或操作列擋住） ====== */
+/* 焦點自動可視 */
 (function focusAutoScroll(){
   document.addEventListener('focusin', (e)=>{
     const el = e.target;
@@ -844,7 +696,7 @@ function autoFitActionbarHeight(){
   });
 })();
 
-/* ====== 驗證工具 ====== */
+/* 驗證工具 */
 function isValidYMD(str){
   if(!/^\d{4}-\d{2}-\d{2}$/.test(str)) return false;
   const [y,m,d]=str.split("-").map(n=>parseInt(n,10));
@@ -853,14 +705,12 @@ function isValidYMD(str){
 }
 function isTenAlnum(s){ return /^[A-Za-z0-9]{10}$/.test(s); }
 function isValidMobile(s){ return /^09\d{2}-\d{3}-\d{3}$/.test(s); }
-/* 工資：允許純數字或正確半形千分位（整數） */
 function isValidWageStrict(s){
   if(!s) return false;
   if(/^\d+$/.test(s)) return parseInt(s,10)>0;
   if(/^\d{1,3}(,\d{3})+$/.test(s)) return true;
   return false;
 }
-/* 民國生日 7 碼：yyyMMdd -> 轉西元檢核 */
 function isValidRoc7(str){
   if(!/^\d{7}$/.test(str)) return false;
   const y = parseInt(str.slice(0,3),10) + 1911;
@@ -870,12 +720,12 @@ function isValidRoc7(str){
   return dt.getFullYear()===y && (dt.getMonth()+1)===m && dt.getDate()===d;
 }
 
-/* 新增：觸碰狀態（touched）與延後顯示錯誤邏輯（可調） */
+/* 觸碰狀態（延後顯示錯誤） */
 const TOUCHED = Object.create(null);
 function markTouched(id){ if(id) TOUCHED[id] = true; }
 function shouldShowErr(id, submit){ return !!submit || !!TOUCHED[id]; }
 
-/* ====== 步驟顯示與面板背景分組 ====== */
+/* 步驟顯示與背景分組 */
 let currentPage = 1;
 function pad2(n){ return String(n).padStart(2,'0'); }
 function updateHeaderStep(){
@@ -893,7 +743,7 @@ function showStep(pageNumber){
   updateNavState();
 }
 
-/* ====== 各頁驗證（submit=false：不顯示紅字；true：顯示紅字） ====== */
+/* 各頁驗證 */
 function validatePage(n, submit=false){
   switch(n){
     case 1: {
@@ -1061,22 +911,27 @@ function validatePage(n, submit=false){
       if(!all) ok=false;
       return ok;
     }
-    case 12: return true;
+    case 12: { /* 新增：核檢頁必須全勾 */
+      const all = ["#pre1","#pre2","#pre3","#pre4","#pre5","#pre5_1","#pre6"].every(sel => $(sel)?.checked);
+      $("#errPreflight").style.display = (!all && shouldShowErr("preflight", submit)) ? "block" : "none";
+      return all;
+    }
+    case 13: return true;
   }
   return false;
 }
 
-/* ====== 底部操作列：狀態控制 ====== */
+/* 底部按鈕狀態 */
 function updateNavState(){
   const btnPrev = $("#btnPrev"), btnNext = $("#btnNext"), btnFinish=$("#btnFinish");
   btnPrev.disabled = currentPage<=1;
   btnFinish.style.display = currentPage===TOTAL_STEPS ? "inline-block" : "none";
   btnNext.style.display   = currentPage===TOTAL_STEPS ? "none" : "inline-block";
-  btnNext.disabled = !validatePage(currentPage, /*submit*/ false); /* 只算通過與否，不顯示紅字 */
-  btnFinish.disabled = currentPage!==TOTAL_STEPS; /* 最後一頁才可按 */
+  btnNext.disabled = !validatePage(currentPage, /*submit*/ false);
+  btnFinish.disabled = currentPage!==TOTAL_STEPS;
 }
 
-/* ====== 清除當頁（函式保留但按鈕已移除） ====== */
+/* 清除當頁（保留） */
 function clearCurrentPage(){
   const cur = $(`.step.active`);
   if(!cur) return;
@@ -1093,21 +948,17 @@ function clearCurrentPage(){
   updateNavState();
 }
 
-/* ====== 事件綁定與初始化 ====== */
+/* 綁定事件 */
 function bindLiveValidation(){
   /* 第1頁 */
-  $$('input[name="agree1"]').forEach(r=> r.addEventListener('change', ()=>{
-    markTouched('agree1'); updateNavState();
-  }));
+  $$('input[name="agree1"]').forEach(r=> r.addEventListener('change', ()=>{ markTouched('agree1'); updateNavState(); }));
   /* 第2頁 */
   ["#corp","#team","#workType","#startDate","#wage"].forEach(sel=>{
     const el=$(sel); if(!el) return;
     ["input","change"].forEach(evt=> el.addEventListener(evt, ()=>{ markTouched(el.id); updateNavState(); }));
   });
   /* 第3頁 */
-  $$('input[name="agreeInfo"]').forEach(r=> r.addEventListener('change', ()=>{
-    markTouched('agreeInfo'); updateNavState();
-  }));
+  $$('input[name="agreeInfo"]').forEach(r=> r.addEventListener('change', ()=>{ markTouched('agreeInfo'); updateNavState(); }));
   /* 第4頁 */
   ["#fullName","#gender","#nid"].forEach(sel=>{
     const el=$(sel); if(!el) return;
@@ -1125,17 +976,12 @@ function bindLiveValidation(){
   });
   /* Gmail 自動補 @gmail.com 與小寫化 */
   $("#gmail")?.addEventListener('input', (e)=>{
-    const el = e.target;
-    let v = (el.value||"").toLowerCase();
-    if(v.endsWith("@")) v = v + "gmail.com";            /* 打到 @ 自動補 gmail.com */
-    el.value = v;
-    updateNavState();
+    const el = e.target; let v = (el.value||"").toLowerCase();
+    if(v.endsWith("@")) v = v + "gmail.com";
+    el.value = v; updateNavState();
   });
-
   /* 第7頁 */
-  $$('input[name="agreeOther"]').forEach(r=> r.addEventListener('change', ()=>{
-    markTouched('agreeOther'); updateNavState();
-  }));
+  $$('input[name="agreeOther"]').forEach(r=> r.addEventListener('change', ()=>{ markTouched('agreeOther'); updateNavState(); }));
   /* 第8頁 */
   ["#emgName","#emgRel","#homePhone","#emgMobile","#emgAddr"].forEach(sel=>{
     const el=$(sel); if(!el) return;
@@ -1147,11 +993,9 @@ function bindLiveValidation(){
     ["input","change"].forEach(evt=> el.addEventListener(evt, ()=>{ markTouched(el.id); updateNavState(); }));
   });
   $("#depEnable")?.addEventListener('change', ()=>{ updateNavState(); });
-  /* 第10頁 */
-  $$('input[name="agreeUpload"]').forEach(r=> r.addEventListener('change', ()=>{
-    markTouched('agreeUpload'); updateNavState();
-  }));
-  /* 第11頁 */
+  /* 第10頁同意 */
+  $$('input[name="agreeUpload"]').forEach(r=> r.addEventListener('change', ()=>{ markTouched('agreeUpload'); updateNavState(); }));
+  /* 第11頁檔案 + 檢核 */
   ["#idFront","#idBack"].forEach(sel=>{
     const el=$(sel); if(!el) return;
     el.addEventListener('change', ()=>{
@@ -1165,6 +1009,11 @@ function bindLiveValidation(){
     const el=$(sel); if(!el) return;
     el.addEventListener('change', updateNavState);
   });
+  /* 第12頁：核檢全勾 */
+  ["#pre1","#pre2","#pre3","#pre4","#pre5","#pre5_1","#pre6"].forEach(sel=>{
+    const el=$(sel); if(!el) return;
+    el.addEventListener('change', ()=>{ markTouched('preflight'); updateNavState(); });
+  });
 }
 
 function bindActionBar(){
@@ -1174,27 +1023,25 @@ function bindActionBar(){
   $("#btnNext").addEventListener("click", ()=>{
     const ok = validatePage(currentPage, /*submit*/ true);
     if(ok && currentPage<TOTAL_STEPS){
-      setUpdatedNow(); /* 每次過頁標記更新時間 */
+      setUpdatedNow();
       showStep(currentPage+1);
     }
   });
   $("#btnFinish").addEventListener("click", ()=>{
     if(currentPage===TOTAL_STEPS){
-      setUpdatedNow(); /* 完成時也標記更新時間 */
-      alert("已完成。感謝您的填寫！");
+      setUpdatedNow();
+      alert("✅ 已完成，感謝你/妳的填寫");
     }
   });
 }
 
-/* 初始顯示第1頁 */
+/* 初始化 */
 document.addEventListener("DOMContentLoaded", ()=>{
   showStep(1);
   bindLiveValidation();
   bindActionBar();
-  autoFitActionbarHeight(); /* 載入後先量測 actionbar 高度 */
-  updateStampUI();          /* 初始化時間戳顯示 */
-  /* 右上角頁碼初始化已由 showStep 處理 */
-  /* 注意：密碼正確後才會寫入 CreatedAt 時間戳 */
+  autoFitActionbarHeight();
+  updateStampUI();
 });
 </script>
 </body>
