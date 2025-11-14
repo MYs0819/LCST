@@ -1205,19 +1205,10 @@ function autoFitActionbarHeight(){
 /* ====== 導航/完成 ====== */
 function bindActionBar(){
   $("#btnPrev").addEventListener("click", ()=>{ if(!IS_LOCKED && currentPage>1){ showStep(currentPage-1); } });
-  $("#btnNext").addEventListener("click", ()=>{
-    if(IS_LOCKED) return;
-    const ok = validatePage(currentPage, /*submit*/ true);
-    if(ok && currentPage<TOTAL_STEPS){ setUpdatedNow(); showStep(currentPage+1); }
-  });
-  /* 安全判斷：若沒有完成按鈕，就不綁事件 */
+  $("#btnNext").addEventListener("click", ()=>{ if(IS_LOCKED) return; const ok = validatePage(currentPage, /*submit*/ true); if(ok && currentPage<TOTAL_STEPS){ setUpdatedNow(); showStep(currentPage+1); } });
   const fin = $("#btnFinish");
   if(fin){
-    fin.addEventListener("click", ()=>{
-      if(IS_LOCKED) return;
-      setUpdatedNow();
-      showStep(TOTAL_STEPS);
-    });
+    fin.addEventListener("click", ()=>{ if(IS_LOCKED) return; setUpdatedNow(); showStep(TOTAL_STEPS); });
   }
 }
 
