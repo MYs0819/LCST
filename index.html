@@ -44,6 +44,11 @@
     --footer-h: 44px;           /* 頁尾字級（可調） */
     --kv-offset: 0px;           /* 鍵盤彈出時向上位移量（JS 寫入） */
 
+    /* --------選單字體大小調整（所有選單）-------- */
+    select {
+    font-size: 10px !important;  /* 調小所有選單的字體 */
+    }
+    
     /* 上一頁/下一頁縮小用（可調） */
     --nav-btn-min-h: 32px;      /* 只影響「上一頁 / 下一頁」兩顆按鈕的最小高度（可調） */
     --nav-btn-pad: 4px 10px;    /* 只影響「上一頁 / 下一頁」兩顆按鈕的內距（可調） */
@@ -349,7 +354,7 @@
           <select id="company">
             <option value="" selected disabled>請選擇</option>
             <option>Drunk Caffee 爛醉咖啡</option>
-            <option>FIZZ.FIZZ.TEIPEI</option>
+            <option>FIZZ FIZZ.TEIPEI</option>
             <option>Social Company 有趣人類社交局</option>
           </select>
           <div class="error" id="errcompany">⚠️ 尚未選擇公司</div>
@@ -386,7 +391,7 @@
         </div>
 
         <div class="row">
-          <label for="wage">© 約定工資 <small>⏍ 千分位須逗號，逗號為半形且位置須正確</small></label>
+          <label for="wage">© 約定工資 <small>⏍ 千分位須逗號,逗號為半形且位置須正確</small></label>
           <input id="wage" type="text" placeholder="範例 ☛40,000或200" />
           <div class="error" id="errWage">⚠️ 請輸入正確格式</div>
         </div>
@@ -436,7 +441,7 @@
         </div>
 
         <div class="row">
-          <label for="indigenous">© 原住民身分<small>⏍ 有原住民身分直接填寫哪一族，若無則填寫否</small></label>
+          <label for="indigenous">© 原住民身分<small>⏍ 若有原住民身分直接填寫哪一族,若無則填寫「無」</small></label>
           <input id="indigenous" type="text" placeholder="範例 ☛否或布農族" />
           <div class="error" id="errIndigenous">⚠️ 此欄位不得為空</div>
         </div>
@@ -472,9 +477,9 @@
       <!-- 第6頁：聯絡與學歷 -->
       <section class="step" data-page="6" id="step-6">
         <div class="row">
-          <label for="gmail">© Gmail <small>⏍ 限定Gmail,請填寫常用信箱,寄發薪資單或契約使用</small></label>
+          <label for="gmail">© Gmail <small>⏍ 限定Gmail,請填寫常用信箱,寄發薪資單或契約用</small></label>
           <input id="gmail" type="email" placeholder="請輸入mail" />
-          <div class="error" id="errGmail">⚠️ 請輸入有效 Gmail（@gmail.com）</div>
+          <div class="error" id="errGmail">⚠️ 請輸入有效Gmail</div>
         </div>
 
         <div class="row">
@@ -665,13 +670,13 @@
         <h2>　　 ❗️資料送出前-核檢區</h2>
         <div class="fieldset">
           <div class="checks">
-            <label><input type="checkbox" id="preA"> 請仔細思考認真填寫此表單.</label>
-            <label><input type="checkbox" id="preB"> 以上輸入資料都進行雙重確認.</label>
-            <label><input type="checkbox" id="preC"> 本人聲明無偽造之不法情形.</label>
-            <label><input type="checkbox" id="preD"> 上傳檔案都符合本公司格式.</label>
-            <label><input type="checkbox" id="preE"> 本表單有提供檢核表,請確實檢查後再勾選.</label>
+            <label><input type="checkbox" id="preA"> 1. 請仔細思考認真填寫此表單.</label>
+            <label><input type="checkbox" id="preB"> 2. 以上輸入資料都進行雙重確認.</label>
+            <label><input type="checkbox" id="preC"> 3. 本人聲明無偽造之不法情形.</label>
+            <label><input type="checkbox" id="preD"> 4. 上傳檔案都符合本公司格式.</label>
+            <label><input type="checkbox" id="preE"> 5. 本表單有提供檢核表,請確實檢查後再勾選.</label>
             <label><input type="checkbox" id="preF"> 5-1. 若勾選後還填寫錯誤,請自負責任.</label>
-            <label><input type="checkbox" id="preG"> 提交表單後,請完成截圖回報機制.</label>
+            <label><input type="checkbox" id="preG"> 6. 提交表單後,請完成截圖回報機制.</label>
           </div>
         </div>
       </section>
@@ -712,7 +717,6 @@
 
 /* --------系統常數（可調）-------- */
 const TOTAL_STEPS = 13;  /* 總頁數（顯示用；更新為 13） */
-const ACCESS_PWD = "19860819"; /* 進入密碼（可調） */
 
 const $  = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
@@ -732,16 +736,24 @@ function updateStampUI(){
   if(u){ u.textContent = FORM_META.updatedAt ? fmtTW(FORM_META.updatedAt) : "—"; }
 }
 
-/* ====== 密碼進入遮罩 ====== */
+/* ====== 密碼進入遮罩-動態多組密碼 ====== */
+/* 密碼進入遮罩 - 動態多組密碼 */
+const PASSWORDS = ["MYsDC20251115", "MYsFZ20251115", "MYsSC20251115"]; // 密碼組，可隨時修改或新增
+
+const ACCESS_PWD = PASSWORDS[0]; // 設定為當前使用的密碼（默認是第一組）
+
 (function passGateInit(){
-  const gate = $("#passGate"), pwd = $("#gatePwd"), btn = $("#gatePwdStart"), err=$("#gatePwdErr");
-  if(!gate) return;
+  const gate = $("#passGate"), pwd = $("#gatePwd"), btn = $("#gatePwdStart"), err = $("#gatePwdErr");
+  if (!gate) return;
   err.style.display = "none";
-  btn.addEventListener("click", ()=>{
-    const v = (pwd.value||"").trim();
-    if(v !== ACCESS_PWD){ err.style.display="block"; return; }
-    err.style.display="none";
-    gate.style.display="none";
+  btn.addEventListener("click", () => {
+    const v = (pwd.value || "").trim();
+    if (!PASSWORDS.includes(v)) {  // 檢查輸入的密碼是否在密碼組內
+      err.style.display = "block";
+      return;
+    }
+    err.style.display = "none";
+    gate.style.display = "none";
     setCreatedNow();
     autoFitActionbarHeight();
   });
