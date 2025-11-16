@@ -311,6 +311,7 @@
       <div class="row">
         <label for="gatePwd">輸入金鑰🔑</label>
         <input id="gatePwd" type="password" placeholder="請輸入密碼" />
+        <button type="button" id="togglePwdVisibility">顯示密碼</button>
         <div class="error" id="gatePwdErr">❌ 密碼錯誤，請再試一次</div>
       </div>
       <div class="gate-actions">
@@ -685,13 +686,13 @@
       <section class="step" data-page="13" id="step-13">
         <h2>✅ 全數完成</h2>
         <div style="text-align:center; line-height:1.8;">
-          © 勞報建檔表
+          © 勞工名卡建檔表
           <hr style="border:0;border-top:1px solid var(--border);margin:10px 0;">
           <div>❗️請截圖此畫面給承辦人</div>
           <hr style="border:0;border-top:1px solid var(--border);margin:10px 0;">
           <div>系統已收到資料,將進入處理排程,表單已填寫完畢.</div>
           <div style="margin-top:10px;color:var(--muted);font-size:11px;">
-            建立時間：<span id="stampCreated">—</span>　最後更新：<span id="stampUpdated">—</span>
+            建立時間：<span id="stampCreated">—</span>　提交時間：<span id="stampUpdated">—</span>
           </div>
         </div>
       </section>
@@ -744,11 +745,26 @@ const ACCESS_PWD = PASSWORDS[0]; // 設定為當前使用的密碼（默認是�
 
 (function passGateInit(){
   const gate = $("#passGate"), pwd = $("#gatePwd"), btn = $("#gatePwdStart"), err = $("#gatePwdErr");
+  const togglePwdButton = $("#togglePwdVisibility");
+  
   if (!gate) return;
+  
+  // 初始密碼顯示狀態為隱藏
+  let isPasswordVisible = false;
+
+  // 密碼顯示切換功能
+  togglePwdButton.addEventListener("click", () => {
+    isPasswordVisible = !isPasswordVisible;
+    pwd.type = isPasswordVisible ? "text" : "password"; // 根據狀態顯示或隱藏密碼
+    togglePwdButton.textContent = isPasswordVisible ? "隱藏密碼" : "顯示密碼"; // 按鈕文字切換
+  });
+
   err.style.display = "none";
+  
   btn.addEventListener("click", () => {
-    const v = (pwd.value || "").trim();
-    if (!PASSWORDS.includes(v)) {  // 檢查輸入的密碼是否在密碼組內
+    const v = (pwd.value || "").trim().toLowerCase(); // 將輸入密碼轉為小寫
+    const isValid = PASSWORDS.some(pwd => pwd.toLowerCase() === v); // 比較時將所有密碼轉為小寫
+    if (!isValid) {  // 如果輸入的密碼不在密碼組內
       err.style.display = "block";
       return;
     }
