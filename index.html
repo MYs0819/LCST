@@ -692,7 +692,7 @@
             <label><input type="checkbox" id="preE"> 5. 本表單有提供檢核表,請確實檢查後再勾選.</label>
             <label><input type="checkbox" id="preF"> 5-1. 若勾選後還填寫錯誤,請自負責任.</label>
             <label><input type="checkbox" id="preG"> 6. 提交表單後無法更改,請查核填寫資料正確無誤再提交.</label>
-            <label><input type="checkbox" id="preH"> 7. 提交表單後,請完成截圖回報機制.</label>
+            <label><input type="checkbox" id="preH"> 7. 提交表單後,在按下一頁後完成截圖回報機制.</label>
           </div>
         </div>
         <div class="right-actions" style="display:flex; gap:10px; justify-content:center; position:relative; bottom:0;">
@@ -804,7 +804,7 @@ document.querySelectorAll('#step-12 .checks input[type="checkbox"]').forEach(che
 
 // 檢查是否已全部打勾（7項）
 function checkCheckboxes() {
-  const allChecked = document.querySelectorAll('#step-12 .checks input[type="checkbox"]:checked').length === 7;
+  const allChecked = document.querySelectorAll('#step-12 .checks input[type="checkbox"]:checked').length === 8;
   const submitBtn = document.getElementById('btnSubmit');
   const nextBtn = document.getElementById('btnNext');
   
@@ -1344,7 +1344,7 @@ function bindLiveValidation(){
   ["#chk1","#chk2","#chk3","#chk4"].forEach(sel=> $(sel)?.addEventListener('change', updateNavState));
 
   /* 第12頁（你的 7 個勾選） */
-  ["#preA","#preB","#preC","#preD","#preE","#preF","#preG"].forEach(sel=>{
+  ["#preA","#preB","#preC","#preD","#preE","#preF","#preG","#preH"].forEach(sel=>{
     $(sel)?.addEventListener('change', ()=>{ markTouched('preflight'); updateNavState(); });
   });
 }
