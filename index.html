@@ -1343,23 +1343,35 @@ function bindLiveValidation(){
   bindPreview("#idBack","#nameBackTxt","#thumbBack");
   ["#chk1","#chk2","#chk3","#chk4"].forEach(sel=> $(sel)?.addEventListener('change', updateNavState));
 
-  /* 第12頁（你的 7 個勾選） */
-  ["#preA","#preB","#preC","#preD","#preE","#preF","#preG","#preH"].forEach(sel=>{
-    $(sel)?.addEventListener('change', ()=>{ markTouched('preflight'); updateNavState(); });
+  /* 第12頁（你的 8 個勾選） */
+["#preA","#preB","#preC","#preD","#preE","#preF","#preG","#preH"].forEach(sel=>{
+  $(sel)?.addEventListener('change', () => { 
+    markTouched('preflight');
+    checkCheckboxes();  // 檢查是否所有勾選框都被勾選
+    updateNavState();   // 更新按鈕狀態
   });
+});
+
+function checkCheckboxes() {
+  const allChecked = document.querySelectorAll('#step-12 .checks input[type="checkbox"]:checked').length === 8;
+  const submitBtn = document.getElementById('btnSubmit');
+  const nextBtn = document.getElementById('btnNext');
+
+  // 只有勾選所有8項才能啟用提交按鈕
+  submitBtn.disabled = !allChecked;
+
+  // 下一頁按鈕：需要提交後才可啟用
+  nextBtn.disabled = !allChecked || submitBtn.disabled;
 }
 
-function autoFitActionbarHeight(){
-  const bar = $("#actionbar"); if(!bar) return;
-  const h = bar.offsetHeight;
-  document.documentElement.style.setProperty('--actionbar-h', `${h}px`);
+function updateNavState() {
+  // 當所有勾選框已選且表單已提交後才啟用下一頁按鈕
+  // 提交後，btnNext（下一頁按鈕）將被啟用
+  const btnNext = document.getElementById("btnNext");
+  if (submitBtn.disabled) {
+    btnNext.disabled = true; // 表單未提交前，禁止進入下一頁
+  }
 }
-(function observeBar(){
-  const bar=$("#actionbar");
-  if(!bar || !('ResizeObserver' in window)) return;
-  const ro = new ResizeObserver(()=> autoFitActionbarHeight());
-  ro.observe(bar);
-})();
 
 /* ====== 導航/完成 ====== */
 function bindActionBar(){
