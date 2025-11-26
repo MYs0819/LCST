@@ -7,9 +7,8 @@
 
   <style>
       :root {
-          /* -----------GAS部署網址請至下方 <script> 區域設定------------ */
-
-          /* --------系統共用常數（可全站調整 - 嚴格參照報到須知單）-------- */
+          /* -----------GAS部署網址在719行------------ */
+          /* --------系統共用常數（可全站調整）-------- */
           --card-w: 980px;        /* 表單面板最大寬度（可調） */
           --radius: 16px;         /* 面板圓角（可調） */
           --border: #2a2a2a;      /* 邊框色（可調） */
@@ -21,12 +20,12 @@
           --btn-bg: #bc2d2d;      /* 按鈕底色（可調） */
           --btn-border: #2a2a2a;  /* 按鈕邊框（可調） */
 
-          /* --------全域預設字級（可調 - 已設為報到單標準）-------- */
+          /* --------全域預設字級（可調）-------- */
           --title-size: 24px;     /* 上方頁面主標題字級（可調） */
           --content-size: 12px;   /* 預設內文小字（可調 - 注意：個別頁面有另外覆蓋） */
           --footer-size: 12px;    /* 商標；版權（可調） */
 
-           /* --------全域字級控制變數（可自行調整 - 參照報到單）--------*/
+           /* --------全域字級控制變數（可調）--------*/
           --label-size: 15px;         /* 欄位標題字級（可調） */
           --hint-size: 11px;          /* 小字提示 label small（可調） */
           --input-size: 14px;         /* 輸入框/選單內文字字級（可調） */
@@ -46,7 +45,7 @@
           --footer-h: 44px;           /* 頁尾高度（可調） */
           --kv-offset: 0px;           /* 鍵盤彈出時向上位移量（JS 寫入） */
 
-          /* -----------字級統整模組 同意；有異議（可調 - 參照報到單）----------- */
+          /* -----------字級統整模組 同意；有異議（可調）----------- */
           --fz-title: 28px;           /* ★ 大標題 */
           --fz-subtitle: 22px;        /* ★ 第二層標題 */
           --fz-section: 20px;         /* ★ 區段說明 */
@@ -65,7 +64,7 @@
     /* 面板背景變數（由 data-* 控制） */
     --panel-bg: linear-gradient(0deg,rgba(43,37,37,1) 0%, rgba(0,0,0,1) 100%);
         
-    /* --------第10頁：範例圖片尺寸/外觀（可自行調整）-------- */
+    /* --------第10頁：範例圖片尺寸/外觀（可調）-------- */
     --sample-gap: 10px;         /* 圖片之間的間距（可調） */
     --sample-max-h: 180px;      /* 圖片最大高度（可調） */
     --sample-pad: 8px;          /* 每張圖外框內距（可調） */
@@ -154,7 +153,7 @@
   .step { display: none; font-size: var(--content-size); }
   .step.active { display: block; }
   
-  /* ★★★ 這裡控制副標題 (如：注意事項)，優先使用 local title-size ★★★ */
+  /* 這裡控制副標題 (如：注意事項)，優先使用 local title-size ★★★ */
   .step h2 {
     margin: 0 0 10px 0;
     font-size: var(--title-size); 
@@ -708,21 +707,21 @@
     </div>
 
     <footer class="footer" id="footer">
-      <img src="assets/MYs_logo_去背1.png" alt="MYs Logo" style="height: 20px; margin-right: 8px; vertical-align: middle;" />
-      © Copyright 2025 MYs System-b1.0.82-11/13~11/27
+      <img src="assets/MYs_logo_去背.png" alt="MYs Logo" style="height: 20px; margin-right: 8px; vertical-align: middle;" />
+      © Copyright 2025 MYs System-b1.0.83-11/13~11/27
     </footer>
   </div>
 
 <script>
 /* --------系統常數（可調）-------- */
 const TOTAL_STEPS = 13;  /* 總頁數（可調） */
-/* ★★★ 請確認此處 GAS 網址是否為最新 ★★★ */
+/* GAS 網址 */
 const GAS_URL = "https://script.google.com/macros/s/AKfycbyncVzIPUAQ4U9Mx_ahlGX-wCFwVAIr9hyXYf7LIAhJ-kNwrwwCrzBA3fP4Litq_bQ/exec";
 
 const $  = (sel) => document.querySelector(sel);
 const $$ = (sel) => document.querySelectorAll(sel);
 
-/* 表單時間戳（建立/更新） */
+/* 表單時間戳 */
 const FORM_META = { createdAt: null, updatedAt: null };
 function fmtTW(d){
   try{
@@ -737,9 +736,8 @@ function updateStampUI(){
   if(u){ u.textContent = FORM_META.updatedAt ? fmtTW(FORM_META.updatedAt) : "—"; }
 }
 
-/* ====== 密碼進入遮罩（可調） ====== */
-/* 密碼組，可隨時修改或新增 */
-const PASSWORDS = ["MYsDC714", "MYsFZ714", "MYsSC714"]; 
+/* ====== 密碼進入遮罩 ====== */
+const PASSWORDS = ["MYsDC20251115", "MYsFZ20251115", "MYsSC20251115"]; 
 (function passGateInit(){
   const gate = $("#passGate"), pwd = $("#gatePwd"), btn = $("#gatePwdStart"), err = $("#gatePwdErr");
   const togglePwdButton = $("#togglePwdVisibility");
@@ -764,7 +762,7 @@ const PASSWORDS = ["MYsDC714", "MYsFZ714", "MYsSC714"];
   });
 })();
 
-/* ====== 檔案轉 Base64 工具 (提交用) ====== */
+/* ====== 檔案轉 Base64 工具 ====== */
 function fileToBase64(file) {
     return new Promise((resolve, reject) => {
         if(!file) { resolve(null); return; }
@@ -778,17 +776,18 @@ function fileToBase64(file) {
     });
 }
 
-/* ====== 提交資料邏輯（轉圈圈 + 傳送） ====== */
+/* ====== 提交資料邏輯 (勞工名卡) ====== */
 async function submitData() {
     const btn = $("#btnSubmit");
     if (!btn) return;
 
     const originalText = btn.textContent;
-    btn.textContent = "⏳ 資料傳送中,請稍後,請勿退出此介面...";
+    btn.textContent = "⏳ 資料傳送中...";
     btn.disabled = true;
 
+    /* 收集資料 */
     const payload = {
-        formType: "nameCard", /* 識別碼（需與 GAS 對應） */
+        formType: "nameCard", 
         createdAt: FORM_META.createdAt ? fmtTW(FORM_META.createdAt) : '',
         
         company:    $("#company").value,
@@ -841,7 +840,7 @@ async function submitData() {
         const res = await response.json();
 
         if (res.status === 'ok') {
-            showStep(13); /* 成功 -> 跳至完成頁 */
+            showStep(13); /* 成功 -> 跳至第13頁 */
         } else {
             alert("❌ " + (res.status === 'duplicate' ? "你/妳已經填寫過..." : "錯誤: " + res.message));
             btn.textContent = originalText;
@@ -855,12 +854,16 @@ async function submitData() {
     }
 }
 
-document.getElementById('btnSubmit')?.addEventListener('click', (e) => {
-    e.preventDefault();
-    submitData();
-});
+/* 綁定提交按鈕 */
+const submitBtn = document.getElementById('btnSubmit');
+if(submitBtn) {
+    submitBtn.addEventListener('click', (e) => {
+        e.preventDefault();
+        submitData();
+    });
+}
 
-/* ====== 鍵盤與縮放控制（iOS） ====== */
+/* ====== 鍵盤與縮放控制 ====== */
 (function keyboardLift(){
   const vv = window.visualViewport;
   if(!vv) return;
@@ -909,7 +912,7 @@ function isValidRoc7(str){
   return dt.getFullYear()===y && (dt.getMonth()+1)===m && dt.getDate()===d;
 }
 
-/* 前綴檢查（即時紅字輔助） */
+/* ====== 前綴檢查 ====== */
 function mobilePrefixOK(v){
   const len = v.length;
   for(let i=0;i<len;i++){
@@ -943,16 +946,15 @@ function wagePrefixOK(v){
 }
 function digitsPrefixOK(v, max){ return v.length<=max && /^\d*$/.test(v); }
 
-/* 觸碰狀態（touched）控制 */
+/* ====== 觸碰狀態 ====== */
 const TOUCHED = Object.create(null);
 function markTouched(id){ if(id) TOUCHED[id] = true; }
 function shouldShowErr(id, submit){ return !!submit || !!TOUCHED[id]; }
 
-/* ====== 步驟顯示與背景配色 ====== */
+/* ====== 步驟顯示 ====== */
 let currentPage = 1;
 let IS_LOCKED = false;
 function pad2(n){ return String(n).padStart(2,'0'); }
-/* 指定頁為紫色：1,3,7,10,12；其餘黑色（可調） */
 function pageIsPurple(n){ return [1,3,7,10,12].includes(n); }
 
 function updateHeaderStep(){
@@ -964,10 +966,9 @@ function updateHeaderStep(){
 function lockAllAndHideNav(){
   IS_LOCKED = true;
   document.querySelectorAll('input, select, button, textarea').forEach(el=>{ el.disabled = true; });
-  const prev=$("#btnPrev"), next=$("#btnNext"), fin=$("#btnFinish");
+  const prev=$("#btnPrev"), next=$("#btnNext");
   if(prev){ prev.style.display="none"; }
   if(next){ next.style.display="none"; }
-  if(fin){ fin.style.display="none"; }
 }
 
 function showStep(pageNumber){
@@ -986,7 +987,7 @@ function showStep(pageNumber){
   }
 }
 
-/* ====== 各頁驗證規則（submit=false：不顯示紅字；true：顯示紅字） ====== */
+/* ====== 驗證邏輯 ====== */
 function isValidGmailOnSubmit(val, submit){
   val = (val||"").toLowerCase().trim();
   return submit ? /^[a-z0-9._%+-]+@gmail\.com$/.test(val) : true;
@@ -1147,11 +1148,10 @@ function validatePage(n, submit=false){
       return ok;
     }
     case 12: {
-      /* 關鍵修正：增加防呆，若找不到 checkbox 視為通過(避免卡住)，但若有則需全勾 */
       const chks = ["#preA","#preB","#preC","#preD","#preE","#preF","#preG"];
       const all = chks.every(sel => {
           const el = $(sel);
-          return el ? el.checked : true; // 若元素不存在，暫時當作 true 避免 JS 報錯
+          return el ? el.checked : true;
       });
       return all;
     }
@@ -1164,7 +1164,8 @@ function validatePage(n, submit=false){
 function updateNavState(){
   const btnPrev = $("#btnPrev"), btnNext = $("#btnNext");
   const onLast = currentPage===TOTAL_STEPS;
-  
+  const isValid = validatePage(currentPage, false); // 檢查當頁是否合格
+
   /* 上一頁：第一頁隱藏；最後一頁隱藏 */
   if(btnPrev){
       if(currentPage<=1 || onLast){
@@ -1175,17 +1176,21 @@ function updateNavState(){
       }
   }
 
-  /* 下一頁：第12頁隱藏(只有提交)；最後一頁隱藏 */
+  /* 下一頁：
+     規則1: 最後一頁(13)隱藏
+     規則2: 第12頁(核檢區)也必須隱藏(因為該頁只有提交鈕)
+     規則3: 若沒填好(isValid=false) 則直接隱藏 (none)，否則顯示
+  */
   if(btnNext){
-      if(onLast || currentPage===12){
+      if(onLast || currentPage===12 || !isValid){
         btnNext.style.display = "none";
       } else {
         btnNext.style.display = "inline-block";
-        btnNext.disabled = IS_LOCKED || !validatePage(currentPage, false);
+        btnNext.disabled = IS_LOCKED;
       }
   }
   
-  /* 第12頁：提交按鈕控制 */
+  /* 第12頁：提交按鈕控制 (需全勾選才啟用) */
   if(currentPage === 12){
       const btnSubmit = $("#btnSubmit");
       const isValid12 = validatePage(12, false);
@@ -1265,6 +1270,7 @@ function bindLiveValidation(){
   bindPreview("#idBack","#nameBackTxt","#thumbBack");
   ["#chk1","#chk2","#chk3","#chk4"].forEach(sel=> $(sel)?.addEventListener('change', updateNavState));
 
+  /* 第12頁 Checkbox 監聽 */
   ["#preA","#preB","#preC","#preD","#preE","#preF","#preG"].forEach(sel=>{
     $(sel)?.addEventListener('change', ()=>{ updateNavState(); });
   });
