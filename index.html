@@ -289,7 +289,7 @@
   .gate-actions{ display:flex; gap:10px; justify-content:center; margin-top:12px; }
 
   /* ========== 每頁獨立設定區（可逐頁覆蓋；字級） ========== */
-  /* ★★★ 說明：將 title-size 改為 22px，content-size 改為 15px，完全符合報到須知單的視覺大小（可調） ★★★ */
+  /* 說明：將 title-size 改為 22px，content-size 改為 15px，完全符合報到須知單的視覺大小（可調） ★★★ */
   .step[data-page="1"]{ --title-size: 18px; --content-size: 15px; }
   .step[data-page="2"]{ --title-size: 18px; --content-size: 15px; }
   .step[data-page="3"]{ --title-size: 18px; --content-size: 15px; }
@@ -334,7 +334,7 @@
 
   <div class="container" role="region" aria-label="勞工名卡建檔表 分步表單" data-scheme="black">
     <header class="header">
-      <div class="header-title">📝 勞工名卡</div>
+      <div class="header-title">📝 勞工資訊</div>
       <div class="header-step" id="headerStep">第01頁/共13頁</div>
     </header>
 
@@ -408,7 +408,7 @@
       </section>
 
       <section class="step" data-page="3" id="step-3">
-        <h2>　　 🪧 個人資訊</h2>
+        <h2>　　🪧 個人資訊</h2>
         <ol class="note-list">
           <li>請依照每頁問題指示執行填寫.</li>
           <li>填寫表單若遇到困難,請向承辦人提出禮貌詢問.</li>
@@ -502,7 +502,7 @@
       </section>
 
       <section class="step" data-page="7" id="step-7">
-        <h2>　　 🚨 其他資訊</h2>
+        <h2>　　🚨 其他資訊</h2>
         <ol class="note-list">
           <li>請依照每頁問題指示執行填寫.</li>
           <li>填寫表單若遇到困難,請向承辦人提出禮貌詢問.</li>
@@ -589,7 +589,7 @@
       </section>
 
       <section class="step" data-page="10" id="step-10">
-        <h2>　　 ⏫ 上傳檔案</h2>
+        <h2>　　⏫ 上傳檔案</h2>
         <ol class="note-list">
           <li>上傳之個人身分文件.</li>
           <li>有正確及及錯誤範例.</li>
@@ -708,8 +708,8 @@
     </div>
 
     <footer class="footer" id="footer">
-      <img src="assets/MYs_logo_去背.png" alt="MYs Logo" style="height: 20px; margin-right: 8px; vertical-align: middle;" />
-      © Copyright 2025 MYs System-b1.0.0-11/13~11/27
+      <img src="assets/MYs_logo_去背1.png" alt="MYs Logo" style="height: 20px; margin-right: 8px; vertical-align: middle;" />
+      © Copyright 2025 MYs System-b1.0.82-11/13~11/27
     </footer>
   </div>
 
@@ -1147,7 +1147,12 @@ function validatePage(n, submit=false){
       return ok;
     }
     case 12: {
-      const all = ["#preA","#preB","#preC","#preD","#preE","#preF","#preG"].every(sel=> $(sel).checked);
+      /* 關鍵修正：增加防呆，若找不到 checkbox 視為通過(避免卡住)，但若有則需全勾 */
+      const chks = ["#preA","#preB","#preC","#preD","#preE","#preF","#preG"];
+      const all = chks.every(sel => {
+          const el = $(sel);
+          return el ? el.checked : true; // 若元素不存在，暫時當作 true 避免 JS 報錯
+      });
       return all;
     }
     case 13: return true;
@@ -1160,22 +1165,27 @@ function updateNavState(){
   const btnPrev = $("#btnPrev"), btnNext = $("#btnNext");
   const onLast = currentPage===TOTAL_STEPS;
   
-  /* 上一頁：第一頁禁用；最後一頁隱藏 */
-  btnPrev.disabled = IS_LOCKED || currentPage<=1;
-  if(onLast){ btnPrev.style.display="none"; } else { btnPrev.style.display="inline-block"; }
+  /* 上一頁：第一頁隱藏；最後一頁隱藏 */
+  if(btnPrev){
+      if(currentPage<=1 || onLast){
+          btnPrev.style.display="none";
+      } else {
+          btnPrev.style.display="inline-block";
+          btnPrev.disabled = IS_LOCKED;
+      }
+  }
 
-  /* 下一頁：
-     規則1: 最後一頁(13)隱藏
-     規則2: 第12頁(核檢區)也必須隱藏(因為該頁只有提交鈕)
-  */
-  if(onLast || currentPage===12){
-    btnNext.style.display = "none";
-  } else {
-    btnNext.style.display = "inline-block";
-    btnNext.disabled = IS_LOCKED || !validatePage(currentPage, false);
+  /* 下一頁：第12頁隱藏(只有提交)；最後一頁隱藏 */
+  if(btnNext){
+      if(onLast || currentPage===12){
+        btnNext.style.display = "none";
+      } else {
+        btnNext.style.display = "inline-block";
+        btnNext.disabled = IS_LOCKED || !validatePage(currentPage, false);
+      }
   }
   
-  /* 特殊：第12頁控制「提交按鈕」的禁用狀態 (需全勾選才啟用) */
+  /* 第12頁：提交按鈕控制 */
   if(currentPage === 12){
       const btnSubmit = $("#btnSubmit");
       const isValid12 = validatePage(12, false);
