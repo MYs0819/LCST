@@ -281,10 +281,10 @@
   .gate-card{ width:min(300px, 85vw); background:rgba(30,30,30,0.95); border:1px solid var(--border); border-radius:16px; padding:24px; box-shadow:0 10px 30px rgba(0,0,0,.45); }
   
   /* 1. 標題：輸入密碼後即可填寫 */
-  .gate h3{ margin:0 0 12px 0; font-size:18px; text-align:center; color:#fff; } /* margin-bottom: 12px 是與下一行的距離 */
+  .gate h3{ margin:0 0 8px 0; font-size:18px; text-align:center; color:#fff; } /* margin-bottom: 12px 是與下一行的距離 */
   
   /* 2. 副標：請向人資承辦... */
-  .gate p{ margin:0 0 16px 0; color:var(--muted); font-size:14px; text-align:center; } /* margin-bottom: 12px 是與下一行的距離 */
+  .gate p{ margin:0 0 8px 0; color:var(--muted); font-size:14px; text-align:center; } /* margin-bottom: 12px 是與下一行的距離 */
   
   .gate .row{ text-align:center; display:flex; flex-direction:column; align-items:center; }
   
@@ -293,7 +293,7 @@
   
   /* 4. 輸入框 */
   .gate .row input{ 
-      display:block; margin:0 auto 12px auto; /* margin-bottom: 12px 是與顯示密碼按鈕的距離 */
+      display:block; margin:0 auto 10px auto; /* margin-bottom: 12px 是與顯示密碼按鈕的距離 */
       text-align:center; width:100%; max-width:220px; 
   }
   
@@ -332,7 +332,7 @@
 <body>
 <div class="gate" id="passGate">
     <div class="gate-card">
-            <h3>1輸入密碼後即可填寫</h3>
+            <h3>2輸入密碼後即可填寫</h3>
             <p>請向人資承辦索取密碼🔐</p>
             <div class="row">
                 <label for="gatePwd">請輸入金鑰🔑</label>
