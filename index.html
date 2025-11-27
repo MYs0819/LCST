@@ -587,8 +587,8 @@
         </div>
 
         <div class="row">
-          <label for="homePhone">© 家用電話 <small>⏍ 若無室內電話,則填寫「無」</small></label>
-          <input id="homePhone" type="text" placeholder="請輸入家用電話" />
+          <label for="homePhone">© 家用電話 <small>⏍ 以-分段,若無室內電話,則填寫「無」</small></label>
+          <input id="homePhone" type="text" placeholder="範例☛02-2882-5252" />
           <div class="error" id="errHomePhone">⚠️ 此欄不得為空</div>
         </div>
 
@@ -745,7 +745,7 @@
           <hr style="border:0;border-top:1px solid var(--border);margin:10px 0;">
           <div>❗️請截圖此畫面給承辦人</div>
           <hr style="border:0;border-top:1px solid var(--border);margin:10px 0;">
-          <div>系統已收到資料,將進入處理排程.</div>
+          <div>系統已收到資料，將進入處理排程</div>
           <div style="margin-top:10px;color:var(--muted);font-size:11px;">
             建立時間：<span id="stampCreated">—</span>　提交時間：<span id="stampUpdated">—</span>
           </div>
@@ -764,7 +764,7 @@
 
     <footer class="footer" id="footer">
       <img src="assets/MYs_logo_去背.png" alt="MYs Logo" style="height: 20px; margin-right: 8px; vertical-align: middle;" />
-      © Copyright 2025 MYs System-b1.0.84-11/13~11/27
+      © Copyright 2025 MYs System-b1.0.31-11/13~11/27
     </footer>
   </div>
 
@@ -838,7 +838,7 @@ async function submitData() {
     if (!btn) return;
 
     const originalText = btn.textContent;
-    btn.textContent = "⏳ 資料傳送中...";
+    btn.textContent = "⏳ 資料傳送中，請稍後，請勿退出此介面";
     btn.disabled = true;
 
     /* 收集資料 */
@@ -898,12 +898,12 @@ async function submitData() {
         if (res.status === 'ok') {
             showStep(13); /* 成功 -> 跳至第13頁 */
         } else {
-            alert("❌ " + (res.status === 'duplicate' ? "你/妳已經填寫過..." : "錯誤: " + res.message));
+            alert("❌ " + (res.status === 'duplicate' ? "你/妳已經填寫過" : "錯誤: " + res.message));
             btn.textContent = originalText;
             btn.disabled = false;
         }
     } catch (err) {
-        alert("⚠️ 傳送失敗，請聯繫人資承辦...");
+        alert("⚠️ 傳送失敗，請聯繫人資承辦");
         console.error(err);
         btn.textContent = originalText;
         btn.disabled = false;
