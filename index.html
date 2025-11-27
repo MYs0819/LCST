@@ -332,17 +332,19 @@
 <body>
 <div class="gate" id="passGate">
     <div class="gate-card">
-      <h3>輸入密碼後即可填寫</h3>
-      <p>請向人資承辦索取密碼🔐</p>
-      
-      <div class="row">
-        <label for="gatePwd">輸入金鑰🔑</label>
-        <input id="gatePwd" type="password" placeholder="請輸入密碼" />
-        
-        <button class="btn" type="button" id="togglePwdVisibility" style="padding:6px 16px; font-size:13px; width:auto;">顯示密碼</button>
-        
-        <div class="error" id="gatePwdErr">❌ 密碼錯誤，請再試一次</div>
-      </div>
+            <h3>1輸入密碼後即可填寫</h3>
+            <p>請向人資承辦索取密碼🔐</p>
+            <div class="row">
+                <label for="gatePwd">請輸入金鑰🔑</label>
+                <input id="gatePwd" type="password" placeholder="請輸入密碼" />
+                <button type="button" id="togglePwdVisibility">顯示密碼</button>
+                <div class="error" id="gatePwdErr">❌ 密碼錯誤，請再試一次</div>
+            </div>
+            <div class="gate-actions">
+                <button class="btn" id="gatePwdStart" type="button">確定</button>
+            </div>
+        </div>
+    </div>
       
       <div class="gate-actions">
         <button class="btn" id="gatePwdStart" type="button" style="padding:8px 24px;">確定</button>
